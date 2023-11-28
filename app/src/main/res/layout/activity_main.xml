@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
         <LinearLayout
 
@@ -25,9 +19,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="출발지" />
+
             <View
                 android:layout_width="110dp"
-                android:layout_height="1dp"/>
+                android:layout_height="1dp" />
 
             <TextView
                 android:id="@+id/textView"
@@ -48,18 +43,22 @@
                 android:id="@+id/spinner1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-
-                />
+                android:layout_margin="20dp"/>
 
             <Spinner
                 android:id="@+id/spinner2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp" />
 
         </LinearLayout>
-    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="639dp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
+
