@@ -85,21 +85,37 @@
             android:id="@+id/showCalendarBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:src="@drawable/calendar"
             android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:text="달력 표시" />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/selectedDateTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_marginLeft="2dp"
             android:layout_below="@id/showCalendarBtn"
 
-            android:text="선택된 날짜: "
+            android:text="선택된 날짜"
+            android:textColor="#808080"
+            android:alpha="0.7"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/border"
             />
 
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/resetBtn"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/reset"
+            android:text="초기화"
+            android:textSize="14sp"
+            android:background="@android:color/transparent"
+        />
     </LinearLayout>
     <!-- 데이터 정보 불러오는 곳-->
     <androidx.recyclerview.widget.RecyclerView

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#2196F3" /> <!-- 배경 색상, 여기서는 파란색(#2196F3)으로 설정됨 -->
+</shape>
