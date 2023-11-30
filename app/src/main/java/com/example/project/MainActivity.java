@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView selectedDateTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         selectedDateTextView = findViewById(R.id.selectedDateTextView);
-
         ImageButton showCalendarBtn = findViewById(R.id.showCalendarBtn);
         ImageButton ResetBtn = findViewById(R.id.resetBtn);
+        Spinner startingPoint = findViewById(R.id.spinnerStartingPoint);
+        Spinner endPoint = findViewById(R.id.spinnerEndPoint);
+
+
         showCalendarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +40,24 @@ public class MainActivity extends AppCompatActivity {
                 reset();
             }
         });
+
+
+        ArrayAdapter<CharSequence> startingPointAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.starting_points,
+                android.R.layout.simple_spinner_item
+        );
+        startingPointAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startingPoint.setAdapter(startingPointAdapter);
+
+
+        ArrayAdapter<CharSequence> endPointAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.end_points,
+                android.R.layout.simple_spinner_item
+        );
+        endPointAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        endPoint.setAdapter(endPointAdapter);
     }
 
     private void showDatePickerDialog() {
