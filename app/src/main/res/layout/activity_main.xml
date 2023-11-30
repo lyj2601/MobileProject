@@ -2,11 +2,16 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-        <LinearLayout
+
+
+
+    <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,14 +70,44 @@
 
         </LinearLayout>
 
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        xmlns:tools="http://schemas.android.com/tools"
+        >
+
+        <ImageButton
+
+            android:id="@+id/showCalendarBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar"
+            android:adjustViewBounds="true"
+            android:text="달력 표시" />
+
+        <TextView
+            android:id="@+id/selectedDateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_below="@id/showCalendarBtn"
+
+            android:text="선택된 날짜: "
+            android:background="@drawable/border"
+            />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView"
         android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="644dp"
         android:background="@drawable/round_border" />
-
-
 
 
 </LinearLayout>
