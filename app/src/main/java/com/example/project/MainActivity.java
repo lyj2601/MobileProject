@@ -31,6 +31,17 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
     String selectedStartingPoint;
     String selectedEndPoint;
     String url2;
+    ArrayList<String> items = new ArrayList<String>();
+    ArrayList<String> items2 = new ArrayList<String>();
+    ArrayList<Long> items3 = new ArrayList<Long>();
+    ArrayList<Long> items4 = new ArrayList<Long>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("MainActivity", "makeRequest: Start");
@@ -146,17 +162,73 @@ public class MainActivity extends AppCompatActivity {
                         "serviceKey=FyWbLjBWJm2G5c3rHDUKeOL5RNX6rQY5nguIbbYUV49FeKBacJHtNcRGIRLT5KlmdbvdciGC599ApxTqp5TAug%3D%3D" +
                         "&pageNo=1" +
                         "&numOfRows=20" +
-                        "&_type=xml" +
+                        "&_type=json" +
                         "&depAirportId="+ AviationInformation.getAirline(selectedStartingPoint) +
                         "&arrAirportId="+ AviationInformation.getAirline(selectedEndPoint) +
                         "&depPlandTime="+ depTime;
 
                 editText.setText(url2);
-                /*new Thread(){
-                    @Override
-                    run();
+                new Thread(){
+                    public void run(){
+                        try{
+                            URL url= new URL(url2);
+
+                            InputStream is = url.openStream();
+                            InputStreamReader isr = new InputStreamReader(is);
+                            BufferedReader reader = new BufferedReader(isr);
+
+                            StringBuffer buffer = new StringBuffer();
+                            String line = reader.readLine();
+                            while (line != null) {
+                                buffer.append(line + "\n");
+                                line = reader.readLine();
+                            }
+                            String jsonData = buffer.toString();
+                            JSONObject obj = new JSONObject(jsonData);
+                            // obj의 "boxOfficeResult"의 JSONObject를 추출
+                            JSONObject responseObj = obj.getJSONObject("response");
+
+                            // "body" 키에 해당하는 JSONObject 가져오기
+                            JSONObject bodyObj = responseObj.getJSONObject("body");
+
+                            // "items" 키에 해당하는 JSONObject 가져오기
+                            JSONObject itemsObj = bodyObj.getJSONObject("items");
+
+                            // "item" 키에 해당하는 JSONArray 가져오기
+                            JSONArray itemArray = itemsObj.getJSONArray("item");
+
+                            for (int i = 0; i < itemArray.length(); i++) {
+
+                                JSONObject temp = itemArray.getJSONObject(i);
+
+
+                                String arrAirportNm = temp.getString("arrAirportNm");
+                                items.add(arrAirportNm);
+                                String depAirportNm = temp.getString("depAirportNm");
+                                items2.add(depAirportNm);
+                                Long depPlandTime=temp.getLong("depPlandTime");
+                                items3.add(depPlandTime);
+                                Long arrPlandTime=temp.getLong("arrPlandTime");
+                                items4.add(arrPlandTime);
+
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });}
+                        catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 }.start();
-                    */
+
             }
 
 
@@ -301,11 +373,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*public void run(){
-        try{
-            URL url= new URL();
-        }
-    }*/
 
 
 }
