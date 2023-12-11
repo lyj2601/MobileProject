@@ -38,6 +38,8 @@ public class AviationInformation {
         Airline.put("청주","NAARKTU");
 
     }
-
+    public static String getAirline(String key) {
+        return Airline.get(key);
+    }
 
 }

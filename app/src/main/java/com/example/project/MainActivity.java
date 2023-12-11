@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,16 +41,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", data);
     }
 
-    private String selectedStartingPoint;  // 출발지 선택값을 저장하는 변수
-    private String selectedEndPoint;
-    private long depTime;
-    String urls;
-
     private TextView selectedDateTextView;
     static RequestQueue requestQueue;
-
+    TextView editText;
     AirplaneAdapter adapter;
     RecyclerView recyclerView;
+    Long depTime;
+    String selectedStartingPoint;
+    String selectedEndPoint;
+    String url2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("MainActivity", "makeRequest: Start");
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner endPoint = findViewById(R.id.spinnerEndPoint);
         Button button = findViewById(R.id.button);
         recyclerView=findViewById(R.id.RecyclerView);
+        editText = findViewById(R.id.editText);
 
 
 
@@ -141,7 +142,21 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeRequest(selectedStartingPoint,selectedEndPoint,depTime);
+                url2="http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList?" +
+                        "serviceKey=FyWbLjBWJm2G5c3rHDUKeOL5RNX6rQY5nguIbbYUV49FeKBacJHtNcRGIRLT5KlmdbvdciGC599ApxTqp5TAug%3D%3D" +
+                        "&pageNo=1" +
+                        "&numOfRows=20" +
+                        "&_type=xml" +
+                        "&depAirportId="+ AviationInformation.getAirline(selectedStartingPoint) +
+                        "&arrAirportId="+ AviationInformation.getAirline(selectedEndPoint) +
+                        "&depPlandTime="+ depTime;
+
+                editText.setText(url2);
+                /*new Thread(){
+                    @Override
+                    run();
+                }.start();
+                    */
             }
 
 
@@ -174,10 +189,11 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 (view, yearSelected, monthOfYear, dayOfMonth) -> {
                     String selectedDate = yearSelected + "년" + (monthOfYear + 1) + "월" + dayOfMonth + "일";
+                    String selectedDate1 =String.format("%04d%02d%02d", yearSelected, monthOfYear + 1, dayOfMonth);
                     selectedDateTextView.setText(selectedDate);
                     selectedDateTextView.setAlpha(1.0f);
                     selectedDateTextView.setTextColor(Color.BLACK);
-                    depTime=Long.parseLong(String.valueOf(yearSelected+(monthOfYear + 1)+dayOfMonth));
+                    depTime = Long.parseLong(selectedDate1);
                 },
                 year, month, day
         );
@@ -204,8 +220,8 @@ public class MainActivity extends AppCompatActivity {
                 "&pageNo=1" +
                 "&numOfRows=20" +
                 "&_type=xml" +
-                "&depAirportId="+ AviationInformation.Airport.get(depAirportId) +
-                "&arrAirportId="+ AviationInformation.Airport.get(arrAirportId) +
+                "&depAirportId="+ AviationInformation.getAirline(depAirportId) +
+                "&arrAirportId="+ AviationInformation.getAirline(arrAirportId) +
                 "&depPlandTime="+ time;
 
 
@@ -285,6 +301,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /*public void run(){
+        try{
+            URL url= new URL();
+        }
+    }*/
 
 
 }
