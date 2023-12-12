@@ -13,6 +13,17 @@ import java.util.ArrayList;
 
 public class AirplaneAdapter extends RecyclerView.Adapter<AirplaneAdapter.ViewHolder> {
     ArrayList<Airplane> items = new ArrayList<Airplane>();
+    private ArrayList<String> items1;
+    private ArrayList<String> items2;
+    private ArrayList<Long> items3;
+    private ArrayList<Long> items4;
+    public void setItems(ArrayList<String> items1, ArrayList<String> items2, ArrayList<Long> items3, ArrayList<Long> items4) {
+        this.items1 = items1;
+        this.items2 = items2;
+        this.items3 = items3;
+        this.items4 = items4;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -51,16 +62,15 @@ public class AirplaneAdapter extends RecyclerView.Adapter<AirplaneAdapter.ViewHo
         TextView textView2;
         TextView textView3;
         TextView textView4;
-        public ViewHolder(View itemView) {
+
+        ViewHolder(View itemView) {
             super(itemView);
-
             textView = itemView.findViewById(R.id.textView);
-
             textView2 = itemView.findViewById(R.id.textView2);
             textView3 = itemView.findViewById(R.id.textView3);
             textView4 = itemView.findViewById(R.id.textView4);
-
         }
+
 
         public void setItem(Airplane item) {
             textView.setText(item.getDepAirportNm());

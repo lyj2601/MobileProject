@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> items2 = new ArrayList<String>();
     ArrayList<Long> items3 = new ArrayList<Long>();
     ArrayList<Long> items4 = new ArrayList<Long>();
+    TextView textView;
+    TextView textView2;
+    TextView textView3;
+    TextView textView4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button);
         recyclerView=findViewById(R.id.RecyclerView);
         editText = findViewById(R.id.editText);
+
+
+        textView=findViewById(R.id.textView);
+        textView2=findViewById(R.id.textView2);
+        textView3=findViewById(R.id.textView3);
+        textView4=findViewById(R.id.textView4);
 
 
 
@@ -211,10 +221,18 @@ public class MainActivity extends AppCompatActivity {
                                 Long arrPlandTime=temp.getLong("arrPlandTime");
                                 items4.add(arrPlandTime);
 
+                                Airplane airplane = new Airplane();
+                                adapter.addItem(airplane);
+
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    items.clear();
+                                    items2.clear();
+                                    items3.clear();
+                                    items4.clear();
+                                    adapter.setItems(items, items2, items3, items4);
                                     adapter.notifyDataSetChanged();
                                 }
                             });}
@@ -237,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
