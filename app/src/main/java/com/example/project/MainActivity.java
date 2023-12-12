@@ -287,10 +287,45 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject itemsObj = bodyObj.getJSONObject("items");
 
                     // "item" 키에 해당하는 JSONArray 가져오기
-                    JSONArray itemArray = itemsObj.getJSONArray("item");
+                    Object itemData = null;
+                    try {
+                        itemData = itemsObj.get("item");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    for (int i = 0; i < itemArray.length(); i++) {
-                        JSONObject temp = itemArray.getJSONObject(i);
+                    if (itemData instanceof JSONArray) {
+                        // "item"이 배열인 경우
+                        JSONArray itemArray = (JSONArray) itemData;
+
+                        for (int i = 0; i < itemArray.length(); i++) {
+                            try {
+                                JSONObject temp = itemArray.getJSONObject(i);
+                                String arrAirportNm = temp.getString("arrAirportNm");
+                                String depAirportNm = temp.getString("depAirportNm");
+                                Long depPlandTime = temp.getLong("depPlandTime");
+                                Long arrPlandTime = temp.getLong("arrPlandTime");
+
+
+                                // UI 업데이트를 메인 스레드에서 처리
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // addItem 메서드 호출
+                                        adapter.addItem(arrAirportNm, depAirportNm, depPlandTime, arrPlandTime);
+                                        // 어댑터 갱신
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+                                // 이후 코드는 이전과 동일하게 유지
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                // 예외 처리
+                            }
+                        }
+                    } else if (itemData instanceof JSONObject) {
+                        // "item"이 단일 객체인 경우
+                        JSONObject temp = (JSONObject) itemData;
                         String arrAirportNm = temp.getString("arrAirportNm");
                         String depAirportNm = temp.getString("depAirportNm");
                         Long depPlandTime = temp.getLong("depPlandTime");
@@ -308,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
