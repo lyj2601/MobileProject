@@ -33,7 +33,10 @@ public class AirplaneAdapter extends RecyclerView.Adapter<AirplaneAdapter.ViewHo
         textView4.setText(items4.toString());
         notifyDataSetChanged();
     }
-
+    public void clearData() {
+        items.clear();
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {

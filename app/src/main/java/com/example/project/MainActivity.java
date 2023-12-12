@@ -240,14 +240,21 @@ public class MainActivity extends AppCompatActivity {
 
         // 어댑터 갱신
         recyclerView.setVisibility(View.GONE);
-        if (apiRequestThread != null && apiRequestThread.isAlive()) {
-            apiRequestThread.interrupt();
+        if (requestQueue != null) {
+            requestQueue.cancelAll("apiRequest");
         }
 
-
+        adapter.clearData();
     }
 
     private void makeApiRequest(){
+        adapter.clearData();
+        String requestTag = "apiRequest";
+
+        // 기존의 요청 취소
+        if (requestQueue != null) {
+            requestQueue.cancelAll(requestTag);
+        }
 
         Log.d("MainActivity", "makeApiRequest: Start");
         url2="http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList?" +
@@ -343,6 +350,41 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // 응답 처리
+                                    try {
+                                        JSONObject obj = new JSONObject(response);
+                                        // 나머지 응답 처리 코드
+                                        // ...
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // 에러 처리
+                                    if (error.networkResponse != null) {
+                                        // 네트워크 응답 코드에 따라 처리
+                                        int statusCode = error.networkResponse.statusCode;
+                                        // ...
+                                    } else {
+                                        // 네트워크 오류 또는 타임아웃 등
+                                        // ...
+                                    }
+                                }
+                            });
+
+                    // 요청에 태그 추가
+                    stringRequest.setTag(requestTag);
+
+                    // 요청 큐에 추가
+                    requestQueue.add(stringRequest);
+
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -359,6 +401,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
+
 
         }.start();
     }
