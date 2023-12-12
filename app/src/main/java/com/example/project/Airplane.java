@@ -1,7 +1,10 @@
 package com.example.project;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 //import javax.annotation.Generated;
 
@@ -10,9 +13,9 @@ public class Airplane {
 
     private String airlineNm;  //항공사 명
     private String arrAirportNm;  //도착 공항
-    private Long arrPlandTime; //도착 시간
+    private String arrPlandTime; //도착 시간
     private String depAirportNm; //출발 공항
-    private Long depPlandTime;// 출발 시간
+    private String depPlandTime;// 출발 시간
     private Integer economyCharge; // 일반석 운임 가격
     private Integer prestigeCharge; //비즈니스석 운임 가격
     private String vihicleId; //항공편 명
@@ -33,15 +36,17 @@ public class Airplane {
     public void setArrAirportNm(String arrAirportNm) {
         this.arrAirportNm = arrAirportNm;
     }
-
-    public Long getArrPlandTime() {
+//
+    public String getArrPlandTime() {
         return arrPlandTime;
     }
 
     public void setArrPlandTime(Long arrPlandTime) {
-        this.arrPlandTime = arrPlandTime;
-    }
 
+        String timeString = extractTimeFromTimestamp(arrPlandTime);
+        this.arrPlandTime = timeString;
+    }
+//
     public String getDepAirportNm() {
         return depAirportNm;
     }
@@ -49,15 +54,16 @@ public class Airplane {
     public void setDepAirportNm(String depAirportNm) {
         this.depAirportNm = depAirportNm;
     }
-
-    public Long getDepPlandTime() {
+///
+    public String getDepPlandTime() {
         return depPlandTime;
     }
 
     public void setDepPlandTime(Long depPlandTime) {
-        this.depPlandTime = depPlandTime;
+        String timeString = extractTimeFromTimestamp(depPlandTime);
+        this.depPlandTime = timeString;
     }
-
+///
     public Integer getEconomyCharge() {
         return economyCharge;
     }
@@ -89,5 +95,19 @@ public class Airplane {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+
+    private String extractTimeFromTimestamp(Long depPlandTime) {
+        // Long 값을 문자열로 변환
+        String timestampString = String.valueOf(depPlandTime);
+
+        // 맨 뒤 4자리 추출
+        String last4Digits = timestampString.substring(timestampString.length() - 4);
+
+        // 시간과 분으로 나타내는 문자열로 변환
+        String timeString = last4Digits.substring(0, 2) + ":" + last4Digits.substring(2);
+
+        return timeString;
+    }
+
 
 }
