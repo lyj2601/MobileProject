@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         url2="http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList?" +
                 "serviceKey=FyWbLjBWJm2G5c3rHDUKeOL5RNX6rQY5nguIbbYUV49FeKBacJHtNcRGIRLT5KlmdbvdciGC599ApxTqp5TAug%3D%3D" +
                 "&pageNo=1" +
-                "&numOfRows=20" +
+                "&numOfRows=300" +
                 "&_type=json" +
                 "&depAirportId="+ AviationInformation.getAirline(selectedStartingPoint) +
                 "&arrAirportId="+ AviationInformation.getAirline(selectedEndPoint) +
@@ -310,8 +310,10 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject temp = itemArray.getJSONObject(i);
                                 String arrAirportNm = temp.getString("arrAirportNm");
                                 String depAirportNm = temp.getString("depAirportNm");
+                                String airlineNm = temp.getString("airlineNm");
                                 Long depPlandTime = temp.getLong("depPlandTime");
                                 Long arrPlandTime = temp.getLong("arrPlandTime");
+
 
 
                                 // UI 업데이트를 메인 스레드에서 처리
@@ -319,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         // addItem 메서드 호출
-                                        adapter.addItem(arrAirportNm, depAirportNm, depPlandTime, arrPlandTime);
+                                        adapter.addItem(arrAirportNm, depAirportNm,airlineNm ,depPlandTime, arrPlandTime);
                                         // 어댑터 갱신
                                         adapter.notifyDataSetChanged();
                                     }
@@ -335,16 +337,16 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject temp = (JSONObject) itemData;
                         String arrAirportNm = temp.getString("arrAirportNm");
                         String depAirportNm = temp.getString("depAirportNm");
+                        String airlineNm = temp.getString("airlineNm");
                         Long depPlandTime = temp.getLong("depPlandTime");
                         Long arrPlandTime = temp.getLong("arrPlandTime");
-
 
                         // UI 업데이트를 메인 스레드에서 처리
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 // addItem 메서드 호출
-                                adapter.addItem(arrAirportNm, depAirportNm, depPlandTime, arrPlandTime);
+                                adapter.addItem(arrAirportNm, depAirportNm,airlineNm ,depPlandTime, arrPlandTime);
                                 // 어댑터 갱신
                                 adapter.notifyDataSetChanged();
                             }

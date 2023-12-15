@@ -53,12 +53,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:text="항공사"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="출발시간"
                 android:textSize="15sp"
                 />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView5"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
