@@ -8,3 +8,7 @@
 
 2023-12-15  <br/>
  출력내용에 항공사 추가, api주소 텍스트뷰 visability : gone으로 변경하여 화면에 나오지 않도록 변경
+
+
+https://github.com/lyj2601/MobileProject/assets/49442157/068f17be-f0c2-4cae-ad80-c601c7193e06
+
